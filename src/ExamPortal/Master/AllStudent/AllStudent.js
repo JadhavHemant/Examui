@@ -3,16 +3,12 @@ import axios from 'axios';
 
 const AllStudent = () => {
   const [data, setData] = useState([]);
-
-
-
-
   useEffect(() => {
     getStudent();
-
   }, []);
 
 
+  
   const getStudent = () => {
     axios({
       url: "http://localhost:8000/api/studentregi",
@@ -24,9 +20,27 @@ const AllStudent = () => {
     });
   }
 
+  const dltStud = (id) => {
+    axios({
+      url: "http://127.0.0.1:8000/api/studentregi/update/delete/"+id,
+      method: "DELETE",
+      contentType: "application/json",  
+    }).then((res) => {
+      alert("Delete")
+      getStudent();
+
+    });
+
+  }
+
   return (
     <>
-      <div>
+      <div style={{ "marginBottom": "20px" }}>
+        <center>
+          <span style={{ "fontSize": "30px", "fontFamily": "Times New Roman", "fontWeight": "bold" }}>All Student</span>
+        </center>
+      </div>
+      <div className='format'>
         <table id="customers">
           <tr>
             <th>Student Name</th>
@@ -35,8 +49,9 @@ const AllStudent = () => {
             <th>Contact Number</th>
             <th>City</th>
             <th>Password</th>
+            <th>Delete</th>
 
-          </tr>
+       </tr>
 
           {
             data.map((d, k) => (
@@ -47,6 +62,8 @@ const AllStudent = () => {
                 <td>{d.contact_number}</td>
                 <td>{d.city}</td>
                 <td>{d.password}</td>
+                <td>
+                  <button type="Submit" className="btn" onClick={() => dltStud(d.id)} >X</button></td>
               </tr>
             ))
           }

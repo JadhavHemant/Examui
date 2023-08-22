@@ -13,16 +13,21 @@ const Content = () => {
 
 
   const AddContentData = () => {
+    
     var top = { "content_name": contdata.current.value, "topic_id": datacontent.current.value };
     axios({
-      url: 'http://localhost:8000/api/content',
+      url: 'http://127.0.0.1:8000/api/content',
       method: 'post',
       data: top,
       contentType: 'application/json',
     }).then((res) => {
-      alert('content added')
+      alert("Addedd")
       GetContent();
+      GetCont();
+    }).catch((err) => {
+      alert("wrong Codding")
     })
+
   }
 
   const GetContent = () => {
@@ -32,7 +37,7 @@ const Content = () => {
       contentType: 'application/json',
     }).then((res) => {
       setContent(res.data);
-
+  
     });
 
   }
@@ -40,42 +45,53 @@ const Content = () => {
   const GetCont = () => {
 
     axios({
-      url: 'http://localhost:8000/api/content',
+      url: 'http://127.0.0.1:8000/api/content',
       method: 'get',
       contentType: 'application/json',
-
     }).then((res) => {
-
       setContentData(res.data)
     })
   }
 
+ const DeleteContent=(id)=>{
+  axios({
+    url: 'http://127.0.0.1:8000/api/content/'+id,
+    method: 'DELETE',
+    contentType: 'application/json',
+  }).then((res) => {
+   alert("delete content");
+   GetCont();
+  }).catch((err)=>{
+    alert("wrong Codding")
+  })
+ }
+
   return (
     <>
       <div>
-        <div class="account-page">
-          <div class="container">
-            <div class="row">
+        <div className="account-page">
+          <div className="container">
+            <div className="row">
 
-              <div class="col-2">
-                <div class="form-container" style={{height:"300px"}}>
-                  <div class="form-btn">
+              <div className="col-2">
+                <div className="form-container" style={{height:"300px"}}>
+                  <div className="form-btn">
                     <span>Add Content</span>
                   </div>
                   <form id="RegForm">
                      
                       <select ref={datacontent}>
-                      <option selected disabled>Select Topic</option>
+                      <option selected disabled>   Select Topic   </option>
                       {
 
                         conten.map((d, k) => (
-                          <option key={k} value={d.topic_id} > {d.topic_name}</option>
+                          <option key={k} value={d.id}>{d.topic_name}</option>
                         ))
                       }
                     </select>
                    
                     <input type="text" ref={contdata} placeholder="Enter Content" />
-                    <button type="Submit" onClick={() => AddContentData()} class="btn">Add Content</button>
+                    <button type="Submit" onClick={() => AddContentData()} className="btn">Add Content</button>
                   </form>
                 </div>
               </div>
@@ -88,12 +104,14 @@ const Content = () => {
           <tr>
             <th>Sr.no</th>
             <th>Content</th>
+            <th>Operations</th>
           </tr>
           {
             contentdata.map((d, k) => (
               <tr>
                 <td>{k + 1}</td>
                 <td>{d.content_name}</td>
+                <td><button type="Submit" onClick={() => DeleteContent(d.id)} className="btn">Delete</button></td>
               </tr>
             ))
           }

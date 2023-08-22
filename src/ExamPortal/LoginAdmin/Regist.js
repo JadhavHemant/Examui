@@ -1,85 +1,85 @@
-import React, { useRef } from 'react'
+import React, { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
-import Login from './Images/login.png'
+import Login from './Images/login.png';
 import axios from 'axios';
+
 const Regist = () => {
   const navigate = useNavigate();
-  // const [data, setData] = useState([]);
-  const name = useRef();
-  const gender = useRef();
-  const email = useRef();
-  const contact=useRef();
-  const password = useRef();
-  const city = useRef();
+  const nameRef = useRef();
+  const genderRef = useRef();
+  const emailRef = useRef();
+  const contactRef = useRef();
+  const passwordRef = useRef();
+  const cityRef = useRef();
 
+  const AddStudentdata = () => {
+    const name = nameRef.current.value;
+    const gender = genderRef.current.value;
+    const email = emailRef.current.value;
+    const contact = contactRef.current.value;
+    const password = passwordRef.current.value;
+    const city = cityRef.current.value;
 
+    if (!name || !gender || !email || !contact || !password || !city) {
+      alert("Please enter all fields");
+    } else {
+      const stud = {
+        "candidate_name": name,
+        "candidate_gender": gender,
+        "candidate_email": email,
+        "contact_number": contact,
+        "password": password,
+        "city": city,
+      };
 
+      axios.post("http://localhost:8000/api/studentregi", stud)
+        .then((res) => {
+          alert("Registration successful");
+          nameRef.current.value = "";
+          genderRef.current.value = "";
+          emailRef.current.value = "";
+          contactRef.current.value = "";
+          passwordRef.current.value = "";
+          cityRef.current.value = "";
 
-  // useEffect(() => {
-  //   getStudent();
+          navigate("");
+        })
+        .catch((err) => {
+          alert("Error occurred during registration");
+        });
+    }
+  };
 
-  // }, []);
-
-
-  // const getStudent = () => {
-  //   axios({
-  //     url: "http://localhost:8000/api/studentregi",
-  //     method: "get",
-  //     contentType: "application/json",
-  //   }).then((res) => {
-  //     setData(res.data);
-  //     console.log(res.data)
-  //   });
-  // }
-
-
-  const AddStudentdata=()=>{
-   var  stud={ "candidate_name":name.current.value,"candidate_gender":gender.current.value,"candidate_email":email.current.value,"contact_number":contact.current.value,"password":password.current.value ,"city":city.current.value}
-    axios({
-      url:"http://localhost:8000/api/studentregi",
-      method:"post",
-      data:stud,
-      contentType: "application/json"
-    }).then((res)=>{
-      alert('added student');
-      // getStudent();
-    });
-  }
   return (
     <div>
-       <div>
-          <div class="account-page">
-            <div class="container">
-              <div class="row">
-              <div class="col-2" >
-                      <img src={Login} alt='img'  />
-                  </div>
-                <div class="col-2">
-                  <div class="form-container" style={{ height: "500px" }}>
-                    <div class="form-btn">
-                      <span>Student Register</span>
-                    </div>
-                    <form id="RegForm">
-                      <input type="text" ref={name} placeholder="Student Full Name" />
-                      <input type="text" ref={gender} placeholder="Gender" />
-                      <input type="email" ref={email} placeholder="Email" />
-                      <input type="text" ref={contact} placeholder="Contact " />
-                      <input type="password" ref={password} placeholder="Password" />
-                      <input type="text" ref={city} placeholder="City" />
-                      <button type="Submit" class="btn" onClick={()=>AddStudentdata()}>Add Student</button>
-                      <button onClick={()=>navigate("/")}>Back to login</button>
-  
-                    </form>
-                  </div>
+      <div className="account-page">
+        <div className="container">
+          <div className="row">
+            <div className="col-2">
+              <img src={Login} alt='img' />
+            </div>
+            <div className="col-2">
+              <div className="form-container" style={{ height: "500px" }}>
+                <div className="form-btn">
+                  <span>Student Register</span>
                 </div>
+                <form id="RegForm">
+                  <input type="text" ref={nameRef} placeholder="Student Full Name" />
+                  <input type="text" ref={genderRef} placeholder="Gender" />
+                  <input type="email" ref={emailRef} placeholder="Email" />
+                  <input type="text" ref={contactRef} placeholder="Contact" />
+                  <input type="password" ref={passwordRef} placeholder="Password" />
+                  <input type="text" ref={cityRef} placeholder="City" />
+                  <button type="button" className="btn" onClick={AddStudentdata}>Add Student</button>
+                  <button type="button" onClick={() => navigate("/")}>Back to login</button>
+                </form>
               </div>
             </div>
           </div>
         </div>
-  
-  
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Regist
+export default Regist;

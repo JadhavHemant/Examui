@@ -6,6 +6,8 @@ const ContentQuestions = () => {
   const Topic = useRef();
   const AddData = () => {
     AddTopicsData();
+    alert("Topic Added");
+
   }
 
 
@@ -23,7 +25,6 @@ const ContentQuestions = () => {
       data: top,
       contentType: 'application/json',
     }).then((res) => {
-      alert('topic addeds')
       GetTopic();
     })
   }
@@ -39,24 +40,35 @@ const ContentQuestions = () => {
     });
 
   }
+  const DeleteTopic=(id)=>{
+    axios({
+      url: 'http://localhost:8000/api/topic/'+id,
+      method: 'DELETE',
+      contentType: 'application/json',
+    }).then((res) => {
+      alert("DeleteSuccess")
+      GetTopic();
+    });
+
+  }
 
 
   return (
     <>
 
       <div>
-        <div class="account-page">
-          <div class="container">
-            <div class="row">
+        <div className="account-page">
+          <div className="container">
+            <div className="row">
 
-              <div class="col-2">
-                <div class="form-container" style={{ height: "220px" }}>
-                  <div class="form-btn">
+              <div className="col-2">
+                <div className="form-container" style={{ height: "220px" }}>
+                  <div className="form-btn">
                     <span>Topic</span>
                   </div>
                   <form id="RegForm">
                     <input type="text" ref={Topic} placeholder="Enter Topic Name" />
-                    <button type="Submit" onClick={() => AddData()} class="btn">Add Tpoics</button>
+                    <button type="Submit" onClick={() => AddData()} className="btn">Add Tpoics</button>
                   </form>
                 </div>
               </div>
@@ -69,14 +81,14 @@ const ContentQuestions = () => {
           <tr>
             <th>Sr.no</th>
             <th>Topic</th>
+            <th>Operations</th>
           </tr>
           {
             topics.map((data, key) => (
               <tr>
                 <td>{key + 1}</td>
                 <td>{data.topic_name}</td>
-
-
+                <td> <button type="Submit" onClick={() => DeleteTopic(data.id)} className="btn">Delete</button></td>
               </tr>
             ))
           }

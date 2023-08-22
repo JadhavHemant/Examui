@@ -44,3 +44,25 @@
   height: 100%;
   width: 100%;
 }
+.video-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.video-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.video-player {
+  width: 100%;
+}
+
+.video-caption {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}

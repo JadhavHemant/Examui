@@ -6,7 +6,7 @@ const Navbar = () => {
 
     return (
         <div style={{"paddingRight":"10px"}}>
-        <button type="Submit" class="btn" onClick={() => navigate("/")} style={{"float":"right"}}>Logout</button>
+        <button type="Submit" className="btn" onClick={() => navigate("/")} style={{"float":"right"}}>Logout</button>
            
         </div>
     )
