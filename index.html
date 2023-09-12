@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+    <script>
+        function validateForm() {
+            var firstName = document.getElementById('first_name').value;
+            var lastName = document.getElementById('last_name').value;
+            var birthDate = new Date(document.getElementById('birthdate').value);
+            var currentDate = new Date();
+            var age = currentDate.getFullYear() - birthDate.getFullYear();
+
+            if (!/^[A-Za-z]+$/.test(firstName)) {
+                alert('First name should only contain alphabets.');
+                return false;
+            }
+
+            if (!/^[A-Za-z]+$/.test(lastName)) {
+                alert('Last name should only contain alphabets.');
+                return false;
+            }
+
+            if (age < 18 || age > 50) {
+                alert('Age should be between 18 and 50.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Student Registration Form</h1>
+    <form method="post" onsubmit="return validateForm();">
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" required><br><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="birthdate">Date of Birth:</label>
+        <input type="date" id="birthdate" name="birthdate" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
